@@ -5,6 +5,7 @@ open Types
 (*
 let _debug = Format.fprintf Format.std_formatter
 *)
+
 let const_to_literal const =
   let open Asttypes in
   match const with
@@ -165,9 +166,14 @@ and mk_expression exp ~var_names ~modules ~functions ~module_name =
   | Texp_constant constant ->
       let v = const_to_literal constant in
       Erlang.Ast.Expr_literal v
-  | Texp_ident (_, { txt; _ }, { val_type; val_kind; _ }) -> (
+  | Texp_ident (path, { txt; _ }, { val_type; val_kind; _ }) -> (
+      let ident =
+        match Path.flatten path with
+        | `Ok (ident, _) -> ident
+        | `Contains_apply -> Error.unsupported_path path
+      in
       let name = Names.name_of_longident txt in
-      let var_name = Names.varname_of_longident txt in
+      let var_name = Names.varname_of_ident ident in
       let args, _ = Uncurry.uncurry_tarrow val_type [] in
       let arity = List.length args in
 
@@ -380,15 +386,6 @@ and mk_expression exp ~var_names ~modules ~functions ~module_name =
       let fresh_var_names =
         collect_var_names Erlang.Ast.[ let_binding.lb_lhs ]
       in
-
-      List.iter
-        (fun name ->
-          match name with
-          | Erlang.Ast.Pattern_binding x ->
-              if name_in_var_names ~var_names x then
-                Error.unsupported_let_shadowing x
-          | _ -> ())
-        fresh_var_names;
 
       let var_names = fresh_var_names @ var_names in
       let let_expr =

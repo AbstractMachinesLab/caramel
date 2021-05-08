@@ -43,16 +43,6 @@ This is currently not supported.
 |};
   exit 1
 
-let unsupported_let_shadowing name =
-  Format.fprintf ppf
-    {|We have found that the variable name %s is being shadowed.
-
-This is currently not supported.
-\n
-|}
-    (Name.to_string name);
-  exit 1
-
 let redefining_function ~fn_name ~module_name =
   Format.fprintf ppf
     {|We have found 2 definitions of the function: %s in module %s.

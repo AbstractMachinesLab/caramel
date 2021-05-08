@@ -32,10 +32,10 @@
   
   -spec run() -> intadd:t().
   run() ->
-    Zero = empty(),
-    One = concat(Zero, 1),
-    Two = intadd:'<+>'(One, 1),
-    Two.
+    Zero_45 = empty(),
+    One_46 = concat(Zero_45, 1),
+    Two_47 = intadd:'<+>'(One_46, 1),
+    Two_47.
   
   
   % Source code generated with Caramel.
@@ -93,7 +93,7 @@
   -export([b/2]).
   
   -spec b(boolean(), boolean()) -> boolean().
-  b(X, Y) -> erlang:'and'(X, Y).
+  b(X_33, Y_34) -> erlang:'and'(X_33, Y_34).
   
   
   % Source code generated with Caramel.
@@ -102,7 +102,7 @@
   -export([inc/1]).
   
   -spec inc(integer()) -> integer().
-  inc(X) -> erlang:'+'(X, 1).
+  inc(X_17) -> erlang:'+'(X_17, 1).
   
   -spec hidden() -> ok.
   hidden() -> ok.

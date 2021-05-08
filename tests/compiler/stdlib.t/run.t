@@ -16,7 +16,7 @@
   -export([print/1]).
   
   -spec print(_) -> ok.
-  print(Thing) -> io:format(<<"~0tp~n">>, [Thing | []]).
+  print(Thing_17) -> io:format(<<"~0tp~n">>, [Thing_17 | []]).
   
   -spec main(_) -> ok.
   main(_) ->
@@ -63,11 +63,11 @@
   
   -spec fmt() -> ok.
   fmt() ->
-    Str = <<"Hello">>,
+    Str_17 = <<"Hello">>,
     begin
-      io:format(<<"~p">>, [Str | []]),
-      Ints = 1,
-      io:format(<<"~p">>, [Ints | []])
+      io:format(<<"~p">>, [Str_17 | []]),
+      Ints_19 = 1,
+      io:format(<<"~p">>, [Ints_19 | []])
     end.
   
   
@@ -78,7 +78,7 @@
   -export([print/1]).
   
   -spec print(_) -> ok.
-  print(Thing) -> io:format(<<"~0tp~n">>, [Thing | []]).
+  print(Thing_17) -> io:format(<<"~0tp~n">>, [Thing_17 | []]).
   
   -spec main(_) -> ok.
   main(_) ->

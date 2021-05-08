@@ -63,7 +63,8 @@ exception Unsupported_empty_identifier
 
 let prime x = Str.global_replace (Str.regexp_string "'") "_prime" x
 
-let varname_of_ident i = i |> Ident.name |> prime |> Name.var |> translate
+let varname_of_ident i =
+  i |> Ident.unique_name |> prime |> Name.var |> translate
 
 let varname_of_longident i =
   i |> Longident.last |> prime |> Name.var |> translate

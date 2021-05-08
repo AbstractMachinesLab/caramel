@@ -42,19 +42,19 @@
   -export([run/0]).
   
   -spec f(_) -> _.
-  f(X) -> f(X).
+  f(X_29) -> f(X_29).
   
   -spec f1(_) -> _.
-  f1(X) -> f([X | []]).
+  f1(X_32) -> f([X_32 | []]).
   
   -spec f2(A, A) -> _.
-  f2(X, Y) -> f([X | [Y | []]]).
+  f2(X_35, Y_36) -> f([X_35 | [Y_36 | []]]).
   
   -spec f3(A, A, A) -> _.
-  f3(X, Y, Z) -> f([X | [Y | [Z | []]]]).
+  f3(X_39, Y_40, Z_41) -> f([X_39 | [Y_40 | [Z_41 | []]]]).
   
   -spec f4(A, A, A, A) -> _.
-  f4(W, X, Y, Z) -> f([W | [X | [Y | [Z | []]]]]).
+  f4(W_44, X_45, Y_46, Z_47) -> f([W_44 | [X_45 | [Y_46 | [Z_47 | []]]]]).
   
   -spec run() -> integer().
   run() ->
@@ -66,18 +66,18 @@
   
   -spec lambda() -> integer().
   lambda() ->
-    F = fun
+    F_53 = fun
       () -> 1
     end,
-    F_prime = fun
-      (X) -> erlang:'+'(1, X)
+    F_prime_55 = fun
+      (X_57) -> erlang:'+'(1, X_57)
     end,
-    F_prime_prime = fun
-      (X, Y) -> erlang:'+'(erlang:'+'(1, X), Y)
+    F_prime_prime_58 = fun
+      (X_60, Y_61) -> erlang:'+'(erlang:'+'(1, X_60), Y_61)
     end,
-    F(),
-    F_prime(1),
-    F_prime_prime(1, 2).
+    F_53(),
+    F_prime_55(1),
+    F_prime_prime_58(1, 2).
   
   
   $ caramel compile binding_on_match.ml
@@ -107,30 +107,30 @@
     case #{ fst => 0
    , snd => 1
    } of
-      #{ fst := Fst, snd := Snd } -> true;
-      #{ fst := X } -> true
+      #{ fst := Fst_20, snd := Snd_21 } -> true;
+      #{ fst := X_22 } -> true
     end.
   
   -spec match_list() -> boolean().
   match_list() ->
     case [0 | [1 | []]] of
       [] -> true;
-      [X | []] -> true;
-      [X | Xs] -> true
+      [X_26 | []] -> true;
+      [X_27 | Xs_28] -> true
     end.
   
   -spec match_tuples() -> boolean().
   match_tuples() ->
     case {1, true, <<"hello">>} of
-      {X, Y, Z} -> true;
-      {X, _, _} -> true;
-      X -> true
+      {X_32, Y_33, Z_34} -> true;
+      {X_35, _, _} -> true;
+      X_36 -> true
     end.
   
   -spec match_atoms() -> boolean().
   match_atoms() ->
     case hello of
-      X -> true
+      X_40 -> true
     end.
   
   
@@ -149,22 +149,22 @@
   -export([g/0]).
   
   -spec f(fun(() -> A)) -> A.
-  f(G) -> G().
+  f(G_22) -> G_22().
   
   -spec g() -> _.
   g(_) -> f(fun g/0).
   
   -spec add(integer(), integer()) -> integer().
-  add(X, Y) -> erlang:'+'(X, Y).
+  add(X_27, Y_28) -> erlang:'+'(X_27, Y_28).
   
   -spec call_op_2(fun((A, B) -> C), A, B) -> C.
-  call_op_2(F, X, Y) -> F(X, Y).
+  call_op_2(F_31, X_32, Y_33) -> F_31(X_32, Y_33).
   
   -spec do_add(integer(), integer()) -> integer().
-  do_add(X, Y) -> call_op_2(fun add/2, X, Y).
+  do_add(X_36, Y_37) -> call_op_2(fun add/2, X_36, Y_37).
   
   -spec do_nested_add(integer(), integer()) -> integer().
-  do_nested_add(X, Y) -> call_op_2(fun funref__nested:add/2, X, Y).
+  do_nested_add(X_40, Y_41) -> call_op_2(fun funref__nested:add/2, X_40, Y_41).
   
   
   $ caramel compile let_bindings.ml
@@ -181,8 +181,8 @@
   
   -spec let_one() -> integer().
   let_one() ->
-    A = 1,
-    A.
+    A_17 = 1,
+    A_17.
   
   -spec let_ignore() -> integer().
   let_ignore() ->
@@ -191,33 +191,33 @@
   
   -spec let_many() -> integer().
   let_many() ->
-    A = 1,
-    B = 2,
-    C = 3,
-    D = 4,
-    erlang:'+'(erlang:'+'(erlang:'+'(A, B), C), D).
+    A_24 = 1,
+    B_25 = 2,
+    C_26 = 3,
+    D_27 = 4,
+    erlang:'+'(erlang:'+'(erlang:'+'(A_24, B_25), C_26), D_27).
   
   -spec let_nested(fun((integer()) -> A), fun(() -> _), fun(() -> _)) -> A.
-  let_nested(F, G, H) ->
-    A = begin
-      G(),
-      B = begin
-        H(),
-        C = 1,
-        erlang:'+'(C, 1)
+  let_nested(F_31, G_32, H_33) ->
+    A_34 = begin
+      G_32(),
+      B_35 = begin
+        H_33(),
+        C_36 = 1,
+        erlang:'+'(C_36, 1)
       end,
-      erlang:'+'(B, 1)
+      erlang:'+'(B_35, 1)
     end,
-    F(A).
+    F_31(A_34).
   
   -spec let_nested_another(_) -> integer().
   let_nested_another(_) ->
-    One = 1,
-    Three = begin
-      Two = erlang:'+'(One, 1),
-      erlang:'+'(Two, 1)
+    One_39 = 1,
+    Three_40 = begin
+      Two_41 = erlang:'+'(One_39, 1),
+      erlang:'+'(Two_41, 1)
     end,
-    Three.
+    Three_40.
   
   
   $ caramel compile list.ml
@@ -250,22 +250,22 @@
   empty() -> [].
   
   -spec pair(A) -> list(A).
-  pair(X) -> [X | [X | []]].
+  pair(X_20) -> [X_20 | [X_20 | []]].
   
   -spec cons(A, list(A)) -> list(A).
-  cons(X, Y) -> [X | Y].
+  cons(X_23, Y_24) -> [X_23 | Y_24].
   
   -spec head(list(A)) -> A.
-  head([X | _]) -> X.
+  head([X_27 | _]) -> X_27.
   
   -spec tail(list(A)) -> list(A).
-  tail([_ | X]) -> X.
+  tail([_ | X_31]) -> X_31.
   
   -spec at_2(list(A)) -> A.
-  at_2([_ | [X | _]]) -> X.
+  at_2([_ | [X_35 | _]]) -> X_35.
   
   -spec concat(list(A), list(A)) -> list(A).
-  concat(A, B) -> erlang:'++'(A, B).
+  concat(A_39, B_40) -> erlang:'++'(A_39, B_40).
   
   
   $ caramel compile literals.ml
@@ -395,7 +395,7 @@
   match_list() ->
     case [0 | [1 | []]] of
       [] -> true;
-      [1 | Xs] -> true;
+      [1 | Xs_35] -> true;
       [1 | []] -> true;
       [0 | [1 | _]] -> true;
       [0 | [1 | []]] -> true
@@ -438,9 +438,9 @@
   -spec run_local() -> atom
          .
   run_local() ->
-    X = fun run_local/0,
-    Y = atom,
-    Y.
+    X_16 = fun run_local/0,
+    Y_17 = atom,
+    Y_17.
   
   -spec run_nested() -> {version, kind_of_working
           }
@@ -452,7 +452,7 @@
   -spec run_nested_ambiguous() -> {compiler, binary()}
                     .
   run_nested_ambiguous() ->
-    X = fun
+    X_30 = fun
       () -> 1
     end,
     names__nested:x().
@@ -478,51 +478,57 @@
                     }.
   
   -spec pair(A, A) -> pair(A).
-  pair(X, Y) ->
-    #{ fst => X
-     , snd => Y
+  pair(X_20, Y_21) ->
+    #{ fst => X_20
+     , snd => Y_21
      }.
   
   -spec fst(pair(A)) -> A.
-  fst(#{ fst := Fst }) -> Fst.
+  fst(#{ fst := Fst_24 }) -> Fst_24.
   
   -spec snd(pair(A)) -> A.
-  snd(#{ snd := Snd }) -> Snd.
+  snd(#{ snd := Snd_28 }) -> Snd_28.
   
   -spec swap(pair(A)) -> pair(A).
-  swap(P) ->
-    #{ fst => maps:get(snd, P)
-     , snd => maps:get(fst, P)
+  swap(P_32) ->
+    #{ fst => maps:get(snd, P_32)
+     , snd => maps:get(fst, P_32)
      }.
   
   -spec map(fun((A) -> B), fun((A) -> B), pair(A)) -> pair(B).
-  map(F, G, #{ fst := Fst, snd := Snd }) ->
-    #{ fst => F(Fst)
-     , snd => G(Snd)
+  map(F_35, G_36, #{ fst := Fst_37, snd := Snd_38 }) ->
+    #{ fst => F_35(Fst_37)
+     , snd => G_36(Snd_38)
      }.
   
   -spec swap_from_expr(A, fun((A) -> pair(B))) -> pair(B).
-  swap_from_expr(P, F) ->
-    #{ fst => maps:get(snd, F(P))
-     , snd => maps:get(fst, F(P))
+  swap_from_expr(P_42, F_43) ->
+    #{ fst => maps:get(snd, F_43(P_42))
+     , snd => maps:get(fst, F_43(P_42))
      }.
   
   -spec flatten_first(pair(pair(pair(A)))) -> pair(A).
-  flatten_first(P) ->
-    #{ fst => maps:get(fst, maps:get(fst, maps:get(fst, P)))
-     , snd => maps:get(snd, maps:get(fst, maps:get(fst, P)))
+  flatten_first(P_46) ->
+    #{ fst => maps:get(fst, maps:get(fst, maps:get(fst, P_46)))
+     , snd => maps:get(snd, maps:get(fst, maps:get(fst, P_46)))
      }.
   
   
   $ caramel compile let_shadowing.ml
-  We have found that the variable name X is being shadowed.
-  
-  This is currently not supported.
-  \n
-  [1]
+  Compiling let_shadowing.erl	OK
   $ cat let_shadowing.erl
-  cat: let_shadowing.erl: No such file or directory
-  [1]
+  % Source code generated with Caramel.
+  -module(let_shadowing).
+  
+  -export([f/0]).
+  
+  -spec f() -> integer().
+  f() ->
+    X_17 = 1,
+    X_18 = erlang:'+'(X_17, 2),
+    X_18.
+  
+  
 
   $ caramel compile names_primes.ml
   Compiling names_primes.erl	OK
@@ -534,10 +540,10 @@
   
   -spec f() -> integer().
   f() ->
-    X = 1,
-    X_prime = erlang:'+'(X, 1),
-    X_prime_prime = erlang:'+'(X_prime, 2),
-    X_prime_prime.
+    X_17 = 1,
+    X_prime_18 = erlang:'+'(X_17, 1),
+    X_prime_prime_19 = erlang:'+'(X_prime_18, 2),
+    X_prime_prime_19.
   
   
   $ caramel compile let_rec.ml
@@ -565,11 +571,11 @@
   
   -spec f() -> t().
   f() ->
-    A = #{ x => 0
+    A_21 = #{ x => 0
      , y => 0
      , z => 0
      },
-    A#{ x := 2
+    A_21#{ x := 2
      , y := 2
      }.
   
@@ -598,27 +604,27 @@
   -export([nested/1]).
   
   -spec direct_sequence(A) -> A.
-  direct_sequence(X) ->
-    X,
-    X,
-    X.
+  direct_sequence(X_17) ->
+    X_17,
+    X_17,
+    X_17.
   
   -spec nested(A) -> A.
-  nested(X) ->
+  nested(X_20) ->
     begin
       begin
-        X,
-        X
+        X_20,
+        X_20
       end,
-      X
+      X_20
     end,
     begin
       begin
-        X,
-        X
+        X_20,
+        X_20
       end,
-      X
+      X_20
     end,
-    X.
+    X_20.
   
   

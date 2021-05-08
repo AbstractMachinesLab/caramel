@@ -29,7 +29,7 @@
   -export([a/1]).
   
   -spec a(integer()) -> integer().
-  a(X) -> X.
+  a(X_17) -> X_17.
   
   
 
@@ -44,10 +44,10 @@
   -export([pair/2]).
   
   -spec pair(A, B) -> {A, B}.
-  pair(X, Y) -> {X, Y}.
+  pair(X_17, Y_18) -> {X_17, Y_18}.
   
   -spec combine({A, B}, {C, D}) -> {{A, C}, {B, D}}.
-  combine({A, B}, {C, D}) -> {{A, C}, {B, D}}.
+  combine({A_21, B_22}, {C_23, D_24}) -> {{A_21, C_23}, {B_22, D_24}}.
   
   -spec ignore() -> ok.
   ignore() -> ok.
@@ -65,8 +65,8 @@
   
   -spec hello() -> ok.
   hello() ->
-    Text = <<"hello, joe!">>,
-    io:format(<<"~p">>, [Text | []]).
+    Text_17 = <<"hello, joe!">>,
+    io:format(<<"~p">>, [Text_17 | []]).
   
   
 
@@ -82,16 +82,16 @@
   -export([snd/1]).
   
   -spec left(A, _) -> A.
-  left(L, _) -> L.
+  left(L_17, _) -> L_17.
   
   -spec right(_, B) -> B.
-  right(_, R) -> R.
+  right(_, R_21) -> R_21.
   
   -spec fst({A, _}) -> A.
-  fst({A, _}) -> A.
+  fst({A_25, _}) -> A_25.
   
   -spec snd({_, B}) -> B.
-  snd({_, B}) -> B.
+  snd({_, B_29}) -> B_29.
   
   
 
@@ -105,13 +105,13 @@
   -export([run/0]).
   
   -spec concat(binary(), binary()) -> binary().
-  concat(A, B) -> caramel_runtime:binary_concat(A, B).
+  concat(A_17, B_18) -> caramel_runtime:binary_concat(A_17, B_18).
   
   -spec run() -> boolean().
   run() ->
-    S1 = concat(<<"ocaml">>, <<"erlang">>),
-    S2 = concat(<<"erlang">>, <<"ocaml">>),
-    erlang:'=:='(S1, S2).
+    S1_21 = concat(<<"ocaml">>, <<"erlang">>),
+    S2_22 = concat(<<"erlang">>, <<"ocaml">>),
+    erlang:'=:='(S1_21, S2_22).
   
   
 
@@ -131,24 +131,24 @@
   -export([iff_using_match/3]).
   
   -spec iff_using_headers(boolean(), A, _) -> A.
-  iff_using_headers(true, F, _) -> F.
+  iff_using_headers(true, F_17, _) -> F_17.
   
   -spec iff_using_function({boolean(), A, A}) -> A.
-  iff_using_function({false, _, F}) -> F;
-  iff_using_function({true, F, _}) -> F.
+  iff_using_function({false, _, F_22}) -> F_22;
+  iff_using_function({true, F_23, _}) -> F_23.
   
   -spec iff_using_if(boolean(), fun(() -> A), fun(() -> A)) -> A.
-  iff_using_if(Cond, T, F) ->
-    case Cond of
-      true -> T();
-      false -> F()
+  iff_using_if(Cond_27, T_28, F_29) ->
+    case Cond_27 of
+      true -> T_28();
+      false -> F_29()
     end.
   
   -spec iff_using_match(boolean(), A, A) -> A.
-  iff_using_match(T, F, G) ->
-    case T of
-      true -> F;
-      false -> G
+  iff_using_match(T_32, F_33, G_34) ->
+    case T_32 of
+      true -> F_33;
+      false -> G_34
     end.
   
   
@@ -186,19 +186,19 @@
   -export([tail/1]).
   
   -spec head(list(A)) -> A.
-  head([X | _]) -> X.
+  head([X_17 | _]) -> X_17.
   
   -spec tail(list(A)) -> list(A).
-  tail([_ | Xs]) -> Xs.
+  tail([_ | Xs_21]) -> Xs_21.
   
   -spec one_el(list(A)) -> A.
-  one_el([X | []]) -> X.
+  one_el([X_25 | []]) -> X_25.
   
   -spec at_2(list(A)) -> A.
-  at_2([_ | [X | _]]) -> X.
+  at_2([_ | [X_29 | _]]) -> X_29.
   
   -spec at_3(list(A)) -> A.
-  at_3([_ | [_ | [X | _]]]) -> X.
+  at_3([_ | [_ | [X_33 | _]]]) -> X_33.
   
   
 
@@ -215,9 +215,9 @@
   -export([with_alias/1]).
   
   -spec with_alias(list(boolean())) -> list(boolean()).
-  with_alias([X | []] = L) ->
-    case X of
-      true -> L;
+  with_alias([X_17 | []] = L_18) ->
+    case X_17 of
+      true -> L_18;
       false -> []
     end.
   
@@ -239,22 +239,22 @@
   -export([double/2]).
   
   -spec add(A) -> A.
-  add(X) -> X.
+  add(X_17) -> X_17.
   
   -spec double(fun((A) -> A), A) -> A.
-  double(F, X) -> F(F(X)).
+  double(F_20, X_21) -> F_20(F_20(X_21)).
   
   -spec add_twice(A) -> A.
-  add_twice(X) -> double(fun add/1, X).
+  add_twice(X_24) -> double(fun add/1, X_24).
   
   -spec call_nested(boolean()) -> ok.
-  call_nested(X) -> qualified_calls__nested:f(X).
+  call_nested(X_31) -> qualified_calls__nested:f(X_31).
   
   -spec call_other(_) -> ok.
-  call_other(X) -> qualified_calls_helper:f(X).
+  call_other(X_34) -> qualified_calls_helper:f(X_34).
   
   -spec call_other_nested(_) -> ok.
-  call_other_nested(X) -> qualified_calls_helper__nested:f(X).
+  call_other_nested(X_38) -> qualified_calls_helper__nested:f(X_38).
   
   
   % Source code generated with Caramel.
@@ -263,8 +263,8 @@
   -export([f/1]).
   
   -spec f(boolean()) -> ok.
-  f(X) ->
-    case X of
+  f(X_27) ->
+    case X_27 of
       true -> ok;
       false -> ok
     end.
@@ -276,7 +276,7 @@
   -export([f/1]).
   
   -spec f(_) -> ok.
-  f(_x) -> ok.
+  f(_x_17) -> ok.
   
   
   % Source code generated with Caramel.
@@ -285,7 +285,7 @@
   -export([f/1]).
   
   -spec f(_) -> ok.
-  f(_x) -> ok.
+  f(_x_19) -> ok.
   
   
 
@@ -299,12 +299,12 @@
   
   -spec run() -> ok.
   run() ->
-    A = 1,
-    B = 2,
+    A_17 = 1,
+    B_18 = 2,
     begin
       io:format(<<"Hello there\n">>, []),
-      io:format(<<"Today we are adding ~p and ~p\n">>, [A | [B | []]]),
-      io:format(<<"Here we go: ~p\n">>, [erlang:'+'(A, B) | []]),
+      io:format(<<"Today we are adding ~p and ~p\n">>, [A_17 | [B_18 | []]]),
+      io:format(<<"Here we go: ~p\n">>, [erlang:'+'(A_17, B_18) | []]),
       io:format(<<"*micdrop*">>, [])
     end.
   
@@ -328,16 +328,16 @@
   -type defer(A) :: fun((ok) -> A).
   
   -spec ignore(_, ok) -> ok.
-  ignore(_x, ok) -> ok.
+  ignore(_x_18, ok) -> ok.
   
   -spec add(integer(), _) -> integer().
-  add(X, Y) -> erlang:'+'(X, X).
+  add(X_23, Y_24) -> erlang:'+'(X_23, X_23).
   
   -spec add_slow(integer(), integer(), ok) -> integer().
-  add_slow(X, Y, ok) -> erlang:'+'(X, Y).
+  add_slow(X_27, Y_28, ok) -> erlang:'+'(X_27, Y_28).
   
   -spec add_really_slow(integer(), ok, integer(), ok) -> integer().
-  add_really_slow(X, ok, Y, ok) -> erlang:'+'(X, Y).
+  add_really_slow(X_32, ok, Y_33, ok) -> erlang:'+'(X_32, Y_33).
   
   
 
@@ -367,10 +367,10 @@
   
   -spec transorm(_) -> list(char()).
   transorm(_) ->
-    Transforms = [fun binary:first/1 | [fun binary:last/1 | []]],
+    Transforms_53 = [fun binary:first/1 | [fun binary:last/1 | []]],
     lists:map(fun
-    (G) -> G(<<"Hello World">>)
-  end, Transforms).
+    (G_70) -> G_70(<<"Hello World">>)
+  end, Transforms_53).
   
   
   $ caramel compile guards.ml
@@ -382,12 +382,12 @@
   -export([f/1]).
   
   -spec f(integer()) -> integer().
-  f(X) ->
-    case X of
-      Y when is_number(Y) -> 3;
-      Y when erlang:is_binary(Y) -> 3;
-      Y when erlang:'>'(Y, 3) -> 3;
-      Y when erlang:'=<'(Y, 3) -> 3;
+  f(X_50) ->
+    case X_50 of
+      Y_51 when is_number(Y_51) -> 3;
+      Y_52 when erlang:is_binary(Y_52) -> 3;
+      Y_53 when erlang:'>'(Y_53, 3) -> 3;
+      Y_54 when erlang:'=<'(Y_54, 3) -> 3;
       _ -> 4
     end.
   
