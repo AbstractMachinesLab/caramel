@@ -33,12 +33,14 @@
   % Source code generated with Caramel.
   -module(apply).
   
+  -export([abs_diff_times/3]).
   -export([f/1]).
   -export([f1/1]).
   -export([f2/2]).
   -export([f3/3]).
   -export([f4/4]).
   -export([lambda/0]).
+  -export([partial_application/0]).
   -export([run/0]).
   
   -spec f(_) -> _.
@@ -78,6 +80,16 @@
     F(),
     F_prime(1),
     F_prime_prime(1, 2).
+  
+  -spec abs_diff_times(integer(), integer(), integer()) -> integer().
+  abs_diff_times(X, Y, Z) -> erlang:'*'(erlang:abs(erlang:'-'(X, Y)), Z).
+  
+  -spec partial_application() -> integer().
+  partial_application() ->
+    F = fun
+      (Caramel@1, Caramel@2) -> abs_diff_times(3, Caramel@1, Caramel@2)
+    end,
+    F(-1, 2).
   
   
   $ caramel compile binding_on_match.ml

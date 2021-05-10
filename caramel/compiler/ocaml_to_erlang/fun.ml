@@ -245,6 +245,8 @@ and mk_expression exp ~var_names ~modules ~functions ~module_name =
       in
       Erlang.Ast.Expr_tuple [ tag; value ]
   | Texp_apply (expr, args) ->
+      let expr_arg_types, _ = Uncurry.uncurry_tarrow expr.exp_type [] in
+      let wanted_arity = List.length expr_arg_types in
       let name =
         match
           mk_expression expr ~var_names ~modules ~functions ~module_name
@@ -261,7 +263,21 @@ and mk_expression exp ~var_names ~modules ~functions ~module_name =
                   (mk_expression arg ~var_names ~modules ~functions ~module_name))
           args
       in
-      Expr.apply name args
+      if wanted_arity > List.length args then
+        let rec gen_names acc n =
+          match n with
+          | 0 -> acc
+          | n ->
+              gen_names
+                (Name.var ("Caramel@" ^ string_of_int n) :: acc)
+                (n - 1)
+        in
+        let outer_names = gen_names [] (wanted_arity - List.length args) in
+        let lhs = List.map Pat.bind outer_names in
+        let idents = List.map Expr.ident outer_names in
+        let rhs = Expr.apply name (args @ idents) in
+        Expr.fun_ ~cases:[ FunDecl.case ~lhs ~guard:None ~rhs ]
+      else Expr.apply name args
   | Texp_record { fields; extended_expression; _ } -> (
       let fields =
         fields |> Array.to_list
