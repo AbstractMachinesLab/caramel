@@ -61,6 +61,17 @@ let find_function_by_name ~functions name =
     (fun Erlang.Ast.{ fd_name; _ } -> Atom.equal fd_name name)
     functions
 
+let pattern_reuses_existing_name maybe_patterns ~var_names  =
+  let pat_bind = fun name ->
+    match name with
+      | Erlang.Ast.Pattern_binding x -> Some x
+      | _ -> None in
+  List.exists
+    (fun name -> match pat_bind name with
+      | Some x -> name_in_var_names ~var_names x
+      | None -> false)
+    maybe_patterns
+
 let rec mk_function name cases ~spec ~var_names ~modules ~functions ~module_name
     =
   (* NOTE: helper function to collect all parameters *)
@@ -380,21 +391,18 @@ and mk_expression exp ~var_names ~modules ~functions ~module_name =
       let fresh_var_names =
         collect_var_names Erlang.Ast.[ let_binding.lb_lhs ]
       in
-
-      List.iter
-        (fun name ->
-          match name with
-          | Erlang.Ast.Pattern_binding x ->
-              if name_in_var_names ~var_names x then
-                Error.unsupported_let_shadowing x
-          | _ -> ())
-        fresh_var_names;
-
+      let use_iife =
+        pattern_reuses_existing_name ~var_names fresh_var_names
+      in
       let var_names = fresh_var_names @ var_names in
       let let_expr =
         mk_expression ~var_names ~modules ~functions ~module_name expr
       in
-      Erlang.Ast.Expr_let (let_binding, let_expr)
+      if use_iife then
+        let Erlang.Ast.{ lb_lhs; lb_rhs } = let_binding in
+        Expr.apply (Expr.fun_ ~cases:[ FunDecl.case ~lhs:[lb_lhs] ~guard:None ~rhs:let_expr ]) [lb_rhs]
+      else
+        Erlang.Ast.Expr_let (let_binding, let_expr)
   | Texp_function { cases; _ } ->
       let f =
         mk_function ~functions ~module_name ~modules ~spec:None ~var_names
