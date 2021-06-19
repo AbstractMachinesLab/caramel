@@ -148,7 +148,7 @@
   -export([f/1]).
   -export([g/0]).
   
-  -spec f(fun(() -> A)) -> A.
+  -spec f(fun((ok) -> A)) -> A.
   f(G) -> G().
   
   -spec g() -> _.
@@ -157,7 +157,7 @@
   -spec add(integer(), integer()) -> integer().
   add(X, Y) -> erlang:'+'(X, Y).
   
-  -spec call_op_2(fun((A, B) -> C), A, B) -> C.
+  -spec call_op_2(fun((A) -> fun((B) -> C)), A, B) -> C.
   call_op_2(F, X, Y) -> F(X, Y).
   
   -spec do_add(integer(), integer()) -> integer().
@@ -197,7 +197,7 @@
     D = 4,
     erlang:'+'(erlang:'+'(erlang:'+'(A, B), C), D).
   
-  -spec let_nested(fun((integer()) -> A), fun(() -> _), fun(() -> _)) -> A.
+  -spec let_nested(fun((integer()) -> A), fun((ok) -> _), fun((ok) -> _)) -> A.
   let_nested(F, G, H) ->
     A = begin
       G(),

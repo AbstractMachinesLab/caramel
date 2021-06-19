@@ -23,18 +23,10 @@ module Fun = struct
   let rec mk_type_expr : Types.type_expr -> Erlang.Ast.type_expr =
    fun type_expr ->
     match type_expr.desc with
-    | Tarrow (_, _, _, _) -> (
-        match Uncurry.from_type_expr type_expr with
-        | `Uncurried (args, return) ->
-            let args = List.map mk_type_expr args in
-            let return = mk_type_expr return in
-            Type.fun_ ~args ~return
-        | `Not_a_function ->
-            Format.fprintf Format.std_formatter
-              "Tried to uncurry a non-function type!\n%!";
-            Printtyp.type_expr Format.std_formatter type_expr;
-            Format.fprintf Format.std_formatter "\n%!";
-            Error.unsupported_feature `Uncurryable_functions)
+    | Tarrow (_, param, out, _) ->
+        let args = [ mk_type_expr param ] in
+        let return = mk_type_expr out in
+        Type.fun_ ~args ~return
     | Tconstr (p, args, _) ->
         let name, args = Names.type_name_of_path p ~args in
         let args = List.map mk_type_expr args in

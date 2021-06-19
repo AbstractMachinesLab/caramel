@@ -137,7 +137,7 @@
   iff_using_function({false, _, F}) -> F;
   iff_using_function({true, F, _}) -> F.
   
-  -spec iff_using_if(boolean(), fun(() -> A), fun(() -> A)) -> A.
+  -spec iff_using_if(boolean(), fun((ok) -> A), fun((ok) -> A)) -> A.
   iff_using_if(Cond, T, F) ->
     case Cond of
       true -> T();
