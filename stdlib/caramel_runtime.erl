@@ -2,6 +2,7 @@
 
 -export([
          binary_concat/2,
+         pipe/2,
          recv/0,
          recv/1
         ]).
@@ -16,3 +17,5 @@ recv(Timeout) ->
 
 binary_concat(A, B) when is_binary(A) and is_binary(B) ->
   << (A)/binary, (B)/binary >>.
+
+pipe(A, B) -> B(A).

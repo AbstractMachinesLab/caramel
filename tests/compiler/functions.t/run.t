@@ -10,6 +10,7 @@
   multiple_clauses.ml
   partial_functions.ml
   pattern_aliases.ml
+  pipe.ml
   qualified_calls.ml
   qualified_calls_helper.ml
   redefine.ml
@@ -222,6 +223,31 @@
     end.
   
   
+  $ caramel compile pipe.ml
+  Compiling pipe.erl	OK
+  $ cat pipe.erl
+  % Source code generated with Caramel.
+  -module(pipe).
+  
+  -export([main/1]).
+  -export([print_int/1]).
+  -export([subtract/2]).
+  
+  -spec print_int(_) -> ok.
+  print_int(Number) -> io:format(<<"~0tp~n">>, [Number | []]).
+  
+  -spec subtract(integer(), integer()) -> integer().
+  subtract(X, Y) -> erlang:'-'(Y, X).
+  
+  -spec main(_) -> ok.
+  main(_) ->
+    Divide = fun
+      (X, Y) -> erlang:'div'(Y, X)
+    end,
+    caramel_runtime:pipe(caramel_runtime:pipe(caramel_runtime:pipe(10, subtract(2)), Divide(4)), fun print_int/1).
+  
+  
+
   $ caramel compile qualified_calls_helper.ml qualified_calls.ml 
   Compiling qualified_calls_helper__nested.erl	OK
   Compiling qualified_calls_helper.erl	OK
